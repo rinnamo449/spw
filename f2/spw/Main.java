@@ -6,12 +6,12 @@ import javax.swing.JFrame;
 
 public class Main {
 	public static void main(String[] args){
-		JFrame frame = new JFrame("War of condition probability");
+		JFrame frame = new JFrame("LOB MUN HAI DAI!!");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(400, 650);
+		frame.setSize(600, 800);
 		frame.getContentPane().setLayout(new BorderLayout());
 		
-		SpaceShip v = new SpaceShip(180, 550, 20, 20);
+		SpaceShip v = new SpaceShip(180, 550, 10, 20);
 		GamePanel gp = new GamePanel();
 		GameEngine engine = new GameEngine(gp, v);
 		frame.addKeyListener(engine);
