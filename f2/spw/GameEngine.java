@@ -35,6 +35,9 @@ public class GameEngine implements KeyListener, GameReporter{
 				process();
 			}
 		});
+		
+
+		
 		timer.setRepeats(true);
 		
 	}
@@ -44,9 +47,16 @@ public class GameEngine implements KeyListener, GameReporter{
 	}
 	
 	private void generateEnemy(){
-		Enemy e = new Enemy((int)(Math.random()*390), 30);
+		Enemy e = new Enemy((int)(Math.random()*400), 100);
 		gp.sprites.add(e);
 		enemies.add(e);
+		
+		
+		if(getScore() > 2000){
+		 Enemy e2 = new Enemy((int)(Math.random()*100), 200);
+		gp.sprites.add(e2);
+		enemies.add(e2);
+		}
 	}
 	
 	private void process(){
@@ -62,7 +72,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(!e.isAlive()){
 				e_iter.remove();
 				gp.sprites.remove(e);
-				score += 100;
+				score += 200;
 			}
 		}
 		
@@ -85,21 +95,45 @@ public class GameEngine implements KeyListener, GameReporter{
 	
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
-		case KeyEvent.VK_LEFT:
-			v.move(-1);
+		case KeyEvent.VK_NUMPAD4:
+			v.moveX(-1);
 			break;
-		case KeyEvent.VK_RIGHT:
-			v.move(1);
+		case KeyEvent.VK_NUMPAD6:
+			v.moveX(1);
 			break;
-		case KeyEvent.VK_D:
+        case KeyEvent.VK_NUMPAD2:
+            v.moveY(1);
+            break;
+        case KeyEvent.VK_NUMPAD8:
+            v.moveY(-1);
+            break;
+			
+		case KeyEvent.VK_NUMPAD7:
+		    {v.moveY(-1);
+			 v.moveX(-1);}
+			 break;
+		case KeyEvent.VK_NUMPAD9:
+		    {v.moveY(-1);
+			 v.moveX(1);}
+			 break;
+		case KeyEvent.VK_NUMPAD1:
+		    {v.moveY(1);
+			 v.moveX(-1);}
+			 break;	 
+        case KeyEvent.VK_NUMPAD3:
+		    {v.moveY(1);
+			 v.moveX(1);}
+			 break;
+			 
+        case KeyEvent.VK_D:
 			difficulty += 0.1;
 			break;
+   
 		}
 	}
 
 	public long getScore(){
-		return score;
-	}
+        return score;	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {

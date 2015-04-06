@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 	public GamePanel() {
 		bi = new BufferedImage(400, 800, BufferedImage.TYPE_INT_ARGB);
 		big = (Graphics2D) bi.getGraphics();
-		big.setBackground(Color.WHITE);
+		big.setBackground(Color.YELLOW);
 	}
 
 	public void updateGameUI(GameReporter reporter){
