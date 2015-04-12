@@ -16,20 +16,21 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
 	private ArrayList<Enemy2> enemies2 = new ArrayList<Enemy2>();
+	private ArrayList<Enemy3> enemies3 = new ArrayList<Enemy3>();
 	private SpaceShip v;	
 	
 	private Timer timer;
 	
 	private long score = 0;
 	private double difficulty = 0.1;
-	private int dead = 9;
+	public int dead = 9;
 	
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
 		this.gp = gp;
-		this.v = v;		
-		
+		this.v = v;	
 		gp.sprites.add(v);
+		
 		
 		timer = new Timer(50, new ActionListener() {
 			
@@ -54,9 +55,16 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e);
 		enemies.add(e);
 		
-		Enemy2 e2 = new Enemy2((int)(Math.random()*400), 100);
+        Enemy2 e2 = new Enemy2((int)(Math.random()*400), 100);
 		gp.sprites.add(e2);
 		enemies2.add(e2);
+		
+		if(score > 5000){
+		Enemy3 e3 = new Enemy3((int)(Math.random()*400), 100);
+		gp.sprites.add(e3);
+		enemies3.add(e3);}
+		 
+		
 		}
 	
 	
@@ -75,6 +83,8 @@ public class GameEngine implements KeyListener, GameReporter{
 				gp.sprites.remove(e);
 				score += 200;
 			}
+		}
+		
 			
 		Iterator<Enemy2> e_iter2 = enemies2.iterator();
 		while(e_iter2.hasNext()){
@@ -87,7 +97,20 @@ public class GameEngine implements KeyListener, GameReporter{
 				score += 300;
 			}
 		}
+		
+		Iterator<Enemy3> e_iter3 = enemies3.iterator();
+		while(e_iter3.hasNext()){
+			Enemy3 e3 = e_iter3.next();
+			e3.proceed();
+			
+		if(!e3.isAlive()){
+				e_iter3.remove();
+				gp.sprites.remove(e3);
+				score += 500;
+			}
 		}
+		
+		
 		
 		gp.updateGameUI(this);
 		
@@ -99,7 +122,8 @@ public class GameEngine implements KeyListener, GameReporter{
 				dead--;
 				return;
 			}
-		if(dead == 0){
+				
+		if(dead <= 0){
 		  die();
 		 }
 		}
@@ -107,16 +131,35 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Enemy2 e2 : enemies2){
 			er = e2.getRectangle();
 			if(er.intersects(vr)){
-				//die();
+				gp.sprites.remove(e2);
+				dead += 1;
+				score += 100;
 				return;
 			}
 		}
 		
+		for(Enemy3 e3 : enemies3){
+			er = e3.getRectangle();
+			if(er.intersects(vr)){
+			    //gp.srites.remove(v2);
+				//gp.srites.remove(v3);
+				dead -= 9;
+				return;
+			}
+		}
+	
+	
+		
 	}
+	
+	public int getDead(){
+	  return dead;	
+	  }
 	
 	public void die(){
 		timer.stop();
 	}
+	
 	
 	void controlVehicle(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -150,10 +193,12 @@ public class GameEngine implements KeyListener, GameReporter{
 			 v.moveX(1);}
 			 break;
 			 
-        case KeyEvent.VK_D:
-			difficulty += 0.1;
+        case KeyEvent.VK_P:
+			timer.stop();
 			break;
-   
+		case KeyEvent.VK_S:
+			timer.start();
+			break;		  
 		}
 	}
 
