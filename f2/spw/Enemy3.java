@@ -5,14 +5,15 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 public class Enemy3 extends Sprite{
+    int i=0;
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
-	private int step = 2;
+	private int step = 3;
 	private boolean alive = true;
 	
 	public Enemy3(int x, int y) {
-		super(x, y, 30, 30);
+		super(x, y, 20, 20);
 		
 	}
 
@@ -30,7 +31,17 @@ public class Enemy3 extends Sprite{
 	}
 
 	public void proceed(){
-		y += step;
+	
+	if( i%2 == 0){
+		x = x + step;
+		i++;
+	}
+	else if(i%2 == 1){
+	    x = x - step;
+		i++;
+	}
+	
+		
 		if(y > Y_TO_DIE){
 			alive = false;
 		}

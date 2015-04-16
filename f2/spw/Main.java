@@ -24,6 +24,7 @@ public class Main {
 		frame.addKeyListener(engine2);
 		frame.setVisible(true);
 		
+		
 		SpaceShip v3 = new SpaceShip(280, 450, 10, 20);
 		GameEngine engine3 = new GameEngine(gp, v3);
 		frame.addKeyListener(engine3);

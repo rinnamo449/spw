@@ -12,6 +12,8 @@ import javax.swing.Timer;
 
 
 public class GameEngine implements KeyListener, GameReporter{
+
+	int stop = 5;
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
@@ -59,10 +61,11 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e2);
 		enemies2.add(e2);
 		
-		if(score > 5000){
+		if(score > 3000 && stop >0){
 		Enemy3 e3 = new Enemy3((int)(Math.random()*400), 100);
 		gp.sprites.add(e3);
-		enemies3.add(e3);}
+		enemies3.add(e3);
+		stop--; }
 		 
 		
 		}
@@ -98,6 +101,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 		}
 		
+				
 		Iterator<Enemy3> e_iter3 = enemies3.iterator();
 		while(e_iter3.hasNext()){
 			Enemy3 e3 = e_iter3.next();
@@ -109,6 +113,8 @@ public class GameEngine implements KeyListener, GameReporter{
 				score += 500;
 			}
 		}
+		
+		
 		
 		
 		
@@ -130,7 +136,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		for(Enemy2 e2 : enemies2){
 			er = e2.getRectangle();
-			if(er.intersects(vr)){
+			if(er.intersects(vr) && dead <=19 ){
 				gp.sprites.remove(e2);
 				dead += 1;
 				score += 100;
@@ -141,9 +147,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		for(Enemy3 e3 : enemies3){
 			er = e3.getRectangle();
 			if(er.intersects(vr)){
-			    //gp.srites.remove(v2);
-				//gp.srites.remove(v3);
-				dead -= 9;
+				dead -= 2;
 				return;
 			}
 		}

@@ -34,15 +34,55 @@ public class GamePanel extends JPanel {
 		hpbar = (Graphics2D) hp.getGraphics();
 		
 		big.setBackground(Color.YELLOW);
+		
+		
+	
 	}
 
 	public void updateGameUI(GameReporter reporter){
+	    
+		
 		big.clearRect(0, 0, 400, 600);
 		big.setColor(Color.GRAY);	
         //big2.setColor(Color.RED);		
 		big.drawString(String.format("SCORE : %08d", reporter.getScore()), 270, 50);
 	    big.drawString(String.format("LIFE : %01d", reporter.getDead()), 20, 50);
-		
+	    
+		if( reporter.getDead() >= 3 && reporter.getDead() < 6 )
+		big.fillRect(20,70,5,20);
+		else if( reporter.getDead() >= 6 && reporter.getDead() < 9 ){
+		big.fillRect(20,70,5,20);
+		big.fillRect(27,70,5,20);}
+		else if( reporter.getDead() >= 9 && reporter.getDead() < 12 ){
+		big.fillRect(20,70,5,20);
+		big.fillRect(27,70,5,20);
+		big.fillRect(34,70,5,20);}
+		else if( reporter.getDead() >=12 && reporter.getDead() < 15 ){
+		big.fillRect(20,70,5,20);
+		big.fillRect(27,70,5,20);
+		big.fillRect(34,70,5,20);
+		big.fillRect(41,70,5,20);}
+		else if( reporter.getDead() >=15 && reporter.getDead() < 18 ){
+		big.fillRect(20,70,5,20);
+		big.fillRect(27,70,5,20);
+		big.fillRect(34,70,5,20);
+		big.fillRect(41,70,5,20);
+		big.fillRect(48,70,5,20);}
+		else if( reporter.getDead() >=18 && reporter.getDead() < 20 ){
+		big.fillRect(20,70,5,20);
+		big.fillRect(27,70,5,20);
+		big.fillRect(34,70,5,20);
+		big.fillRect(41,70,5,20);
+		big.fillRect(48,70,5,20);
+		big.fillRect(55,70,5,20);}
+		else if( reporter.getDead() == 20){
+		big.fillRect(20,70,5,20);
+		big.fillRect(27,70,5,20);
+		big.fillRect(34,70,5,20);
+		big.fillRect(41,70,5,20);
+		big.fillRect(48,70,5,20);
+		big.fillRect(55,70,5,20);
+		big.fillRect(62,70,5,20);}
 		
 		
 		for(Sprite s : sprites){
