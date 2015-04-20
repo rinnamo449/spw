@@ -14,11 +14,14 @@ import javax.swing.Timer;
 public class GameEngine implements KeyListener, GameReporter{
 
 	int stop = 5;
+	int attack = 0;
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
 	private ArrayList<Enemy2> enemies2 = new ArrayList<Enemy2>();
 	private ArrayList<Enemy3> enemies3 = new ArrayList<Enemy3>();
+	private ArrayList<Gun> gun = new ArrayList<Gun>();
+	private ArrayList<Gun> gun2 = new ArrayList<Gun>();
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -66,7 +69,22 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e3);
 		enemies3.add(e3);
 		stop--; }
-		 
+		
+		if(attack == 1 ){
+			Gun g = new Gun(200,350);
+			gp.sprites.add(g);
+			gun.add(g);
+			}
+			
+		if(attack == 2 ){
+			Gun g2 = new Gun(150,350);
+			gp.sprites.add(g2);
+			gun.add(g2);
+			
+			Gun g3 = new Gun(250,350);
+			gp.sprites.add(g3);
+			gun.add(g3);
+			}
 		
 		}
 	
@@ -114,6 +132,30 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 		}
 		
+		Iterator<Gun> e_iter_gun = gun.iterator();
+		while(e_iter_gun.hasNext()){
+			Gun g = e_iter_gun.next();
+			g.proceed();
+			
+		if(!g.isAlive()){
+				e_iter_gun.remove();
+				gp.sprites.remove(g);
+				score += 100;
+			}
+		}
+		
+		
+		Iterator<Gun> e_iter_gun2 = gun.iterator();
+		while(e_iter_gun2.hasNext()){
+			Gun g2 = e_iter_gun2.next();
+			g2.proceed();
+			
+		if(!g2.isAlive()){
+				e_iter_gun2.remove();
+				gp.sprites.remove(g2);
+				score += 100;
+			}
+		}
 		
 		
 		
@@ -122,6 +164,11 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		Rectangle2D.Double vr = v.getRectangle();
 		Rectangle2D.Double er;
+		Rectangle2D.Double er2;
+		Rectangle2D.Double er3;
+		Rectangle2D.Double gr1;
+		Rectangle2D.Double gr2;
+		
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
@@ -135,8 +182,8 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 		
 		for(Enemy2 e2 : enemies2){
-			er = e2.getRectangle();
-			if(er.intersects(vr) && dead <=19 ){
+			er2 = e2.getRectangle();
+			if(er2.intersects(vr) && dead <=19 ){
 				gp.sprites.remove(e2);
 				dead += 1;
 				score += 100;
@@ -145,13 +192,31 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 		
 		for(Enemy3 e3 : enemies3){
-			er = e3.getRectangle();
-			if(er.intersects(vr)){
+			er3 = e3.getRectangle();
+			if(er3.intersects(vr)){
 				dead -= 2;
 				return;
 			}
 		}
 	
+	
+		for(Gun g : gun){
+			gr1 = g.getRectangle();
+			if(gr1.intersects(vr)){
+				score += 100;
+				gp.sprites.remove(g);
+				return;
+			}
+		}
+		
+		for(Gun g2 : gun2){
+			gr2 = g2.getRectangle();
+			if(gr2.intersects(vr)){
+				score += 100;
+				gp.sprites.remove(g2);
+				return;
+			}
+		}
 	
 		
 	}
@@ -202,7 +267,15 @@ public class GameEngine implements KeyListener, GameReporter{
 			break;
 		case KeyEvent.VK_S:
 			timer.start();
-			break;		  
+			break;		 
+
+		case KeyEvent.VK_Q:
+			 {attack = 1;}
+			 break;
+		case KeyEvent.VK_W:
+			 {attack = 2;}
+			 break;
+		
 		}
 	}
 
