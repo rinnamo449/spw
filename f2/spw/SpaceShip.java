@@ -13,7 +13,7 @@ public class SpaceShip extends Sprite{
 
 	@Override
 	public void draw(Graphics2D g) {
-		g.setColor(Color.BLACK);
+		g.setColor(Color.GRAY);
 		g.fillRect(x, y, width, height);
 		g.fillRect(x,y,20,40);
 		g.fillRect(x-20,y+5,30,10);
@@ -45,5 +45,12 @@ public class SpaceShip extends Sprite{
  
 	      }
 
-    }
+	public int getX(){
+		return x;
+		}
+	
+	public int getY(){
+		return y;
+		}
 
+	}

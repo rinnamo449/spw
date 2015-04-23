@@ -13,7 +13,7 @@ import javax.swing.Timer;
 
 public class GameEngine implements KeyListener, GameReporter{
 
-	int stop = 5;
+	int stop = 1;
 	int attack = 0;
 	GamePanel gp;
 		
@@ -22,6 +22,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	private ArrayList<Enemy3> enemies3 = new ArrayList<Enemy3>();
 	private ArrayList<Gun> gun = new ArrayList<Gun>();
 	private ArrayList<Gun> gun2 = new ArrayList<Gun>();
+	private ArrayList<Gunboss> gunboss = new ArrayList<Gunboss>();
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -64,28 +65,32 @@ public class GameEngine implements KeyListener, GameReporter{
 		gp.sprites.add(e2);
 		enemies2.add(e2);
 		
-		if(score > 3000 && stop >0){
-		Enemy3 e3 = new Enemy3((int)(Math.random()*400), 100);
+		if(score > 2000 && stop >0){
+		Enemy3 e3 = new Enemy3(0, 100);
 		gp.sprites.add(e3);
 		enemies3.add(e3);
 		stop--; }
 		
 		if(attack == 1 ){
-			Gun g = new Gun(200,350);
+			Gun g = new Gun(v.getX()+5,v.getY());
 			gp.sprites.add(g);
 			gun.add(g);
 			}
 			
 		if(attack == 2 ){
-			Gun g2 = new Gun(150,350);
+			Gun g2 = new Gun(v.getX()-15,v.getY());
 			gp.sprites.add(g2);
 			gun.add(g2);
 			
-			Gun g3 = new Gun(250,350);
+			Gun g3 = new Gun(v.getX()+25,v.getY());
 			gp.sprites.add(g3);
 			gun.add(g3);
 			}
 		
+		if( score > 2000 ){
+		Gunboss gunb = new Gunboss(200,100);
+			gp.sprites.add(gunb);
+			gunboss.add(gunb); }
 		}
 	
 	
@@ -157,6 +162,18 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 		}
 		
+		Iterator<Gunboss> e_iter_gunboss = gunboss.iterator();
+		while(e_iter_gunboss.hasNext()){
+			Gunboss gunb = e_iter_gunboss.next();
+			gunb.proceed();
+			
+		if(!gunb.isAlive()){
+				e_iter_gunboss.remove();
+				gp.sprites.remove(gunb);
+				score += 100;
+			}
+		}
+		
 		
 		
 		
@@ -168,6 +185,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		Rectangle2D.Double er3;
 		Rectangle2D.Double gr1;
 		Rectangle2D.Double gr2;
+		Rectangle2D.Double gbs;
 		
 		for(Enemy e : enemies){
 			er = e.getRectangle();
@@ -214,6 +232,15 @@ public class GameEngine implements KeyListener, GameReporter{
 			if(gr2.intersects(vr)){
 				score += 100;
 				gp.sprites.remove(g2);
+				return;
+			}
+		}
+		
+		for(Gunboss gunb : gunboss){
+			gbs = gunb.getRectangle();
+			if(gbs.intersects(vr)){
+				score += 100;
+				gp.sprites.remove(gunb);
 				return;
 			}
 		}
