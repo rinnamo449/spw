@@ -56,10 +56,14 @@ public class GamePanel extends JPanel {
 		big.drawImage(bg, 0, 0, 400, 600, null);
 		big.setColor(Color.YELLOW);	
         //big2.setColor(Color.RED);		
-		big.drawString(String.format("SCORE : %08d", reporter.getScore()), 270, 50);
+	    big.drawString(String.format("SCORE : %08d", reporter.getScore()), 270, 30);
 	    big.drawString(String.format("LIFE : %01d", reporter.getDead()), 20, 50);
+		if( reporter.getScore() > 2000)
+		big.drawString(String.format("LIFEBOSS : %01d", reporter.getLifeboss()), 270, 50);
+		if( reporter.getScore() > 2000 && reporter.getScore() < 8000 )
+		big.drawString(String.format("BOSS IS APPEAR!!", reporter.getLifeboss()), 150, 300);
 	    
-		
+		//hpbar
 		if( reporter.getDead() >= 3 && reporter.getDead() < 6 )
 		big.fillRect(20,70,5,20);
 		else if( reporter.getDead() >= 6 && reporter.getDead() < 9 ){
@@ -96,6 +100,127 @@ public class GamePanel extends JPanel {
 		big.fillRect(55,70,5,20);
 		big.fillRect(62,70,5,20);}
 		
+		//hpBoss
+	  if( reporter.getScore() > 2000 )
+		if( reporter.getLifeboss() >= 3 && reporter.getLifeboss() < 6 )
+		big.fillRect(250,70,5,20);
+		else if( reporter.getLifeboss() >= 6 && reporter.getLifeboss() < 9 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);}
+		else if( reporter.getLifeboss() >= 9 && reporter.getLifeboss() < 12 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);}
+		else if( reporter.getLifeboss() >=12 && reporter.getLifeboss() < 15 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);}
+		else if( reporter.getLifeboss() >=15 && reporter.getLifeboss() < 18 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);}
+		else if( reporter.getLifeboss() >=18 && reporter.getLifeboss() < 21 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);}
+		else if( reporter.getLifeboss() >= 21 && reporter.getLifeboss() < 24 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);}
+		else if( reporter.getLifeboss() >= 24 && reporter.getLifeboss() < 27 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);}
+		else if( reporter.getLifeboss() >= 27 && reporter.getLifeboss() < 30 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);
+		big.fillRect(306,70,5,20);}
+		else if( reporter.getLifeboss() >= 30 && reporter.getLifeboss() < 33 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);
+		big.fillRect(306,70,5,20);
+		big.fillRect(313,70,5,20);}
+		else if( reporter.getLifeboss() >= 33 && reporter.getLifeboss() < 36 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);
+		big.fillRect(306,70,5,20);
+		big.fillRect(313,70,5,20);
+		big.fillRect(320,70,5,20);}
+		else if( reporter.getLifeboss() >= 36 && reporter.getLifeboss() < 39 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);
+		big.fillRect(306,70,5,20);
+		big.fillRect(313,70,5,20);
+		big.fillRect(320,70,5,20);
+		big.fillRect(327,70,5,20);}
+		else if( reporter.getLifeboss() >= 39 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);
+		big.fillRect(306,70,5,20);
+		big.fillRect(313,70,5,20);
+		big.fillRect(320,70,5,20);
+		big.fillRect(327,70,5,20);
+		big.fillRect(334,70,5,20);}
+		else if( reporter.getLifeboss() == 40 ){
+		big.fillRect(250,70,5,20);
+		big.fillRect(257,70,5,20);
+		big.fillRect(264,70,5,20);
+		big.fillRect(271,70,5,20);
+		big.fillRect(278,70,5,20);
+		big.fillRect(285,70,5,20);
+		big.fillRect(292,70,5,20);
+		big.fillRect(299,70,5,20);
+		big.fillRect(306,70,5,20);
+		big.fillRect(313,70,5,20);
+		big.fillRect(320,70,5,20);
+		big.fillRect(327,70,5,20);
+		big.fillRect(334,70,5,20);
+		big.fillRect(341,70,5,20);}
 		
 		for(Sprite s : sprites){
 			s.draw(big);

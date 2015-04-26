@@ -15,6 +15,7 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	int stop = 1;
 	int attack = 0;
+	int lifeboss = 40;
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
@@ -86,11 +87,12 @@ public class GameEngine implements KeyListener, GameReporter{
 			gp.sprites.add(g3);
 			gun.add(g3);
 			}
-		
+		//want gun shoot by boss
 		if( score > 2000 ){
-		Gunboss gunb = new Gunboss(200,100);
+		for(int i=0; i<200 ;i++){
+		Gunboss gunb = new Gunboss(v.getX(),100);
 			gp.sprites.add(gunb);
-			gunboss.add(gunb); }
+			gunboss.add(gunb); }}
 		}
 	
 	
@@ -189,7 +191,18 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		for(Enemy e : enemies){
 			er = e.getRectangle();
+			
+				for(Gun g : gun){
+				gr1 = g.getRectangle();
+				if(gr1.intersects(er)){
+					score += 100;
+					gp.sprites.remove(e);
+					return;
+				}
+			}
+			
 			if(er.intersects(vr)){
+			    gp.sprites.remove(e);
 				dead--;
 				return;
 			}
@@ -211,6 +224,21 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		for(Enemy3 e3 : enemies3){
 			er3 = e3.getRectangle();
+			
+			for(Gun g : gun){
+				gr1 = g.getRectangle();
+				if(gr1.intersects(er3)){
+					score += 100;
+					if(lifeboss > 0)
+					lifeboss--;
+					
+					if(lifeboss <= 0)
+					gp.sprites.remove(e3);
+					
+					return;
+				}
+			}
+			
 			if(er3.intersects(vr)){
 				dead -= 2;
 				return;
@@ -238,9 +266,20 @@ public class GameEngine implements KeyListener, GameReporter{
 		
 		for(Gunboss gunb : gunboss){
 			gbs = gunb.getRectangle();
+			
+			for(Gun g : gun){
+				gr1 = g.getRectangle();
+				
+				if(gr1.intersects(gbs)){
+					dead -= 1;
+					gp.sprites.remove(gunb);
+					return;
+				}
+			}
+			
 			if(gbs.intersects(vr)){
-				score += 100;
-				gp.sprites.remove(gunb);
+			    gp.sprites.remove(gunb);
+				dead--;
 				return;
 			}
 		}
@@ -309,6 +348,8 @@ public class GameEngine implements KeyListener, GameReporter{
 	public long getScore(){
         return score;	}
 	
+	public int getLifeboss(){
+	    return lifeboss; }
 	@Override
 	public void keyPressed(KeyEvent e) {
 		controlVehicle(e);

@@ -32,27 +32,16 @@ public class Enemy3 extends Sprite{
 
 	public void proceed(){
 	
-	if( bossmove > 0 && bossmove <= 115){
+	if( bossmove > 0 && bossmove <= 100){
 		x = x + step;
 		bossmove++;
 	}
-	else if(bossmove > 115 && bossmove <= 230){
+	else if(bossmove > 100 && bossmove <= 200){
 	    x = x - step;
 		bossmove++;
-		if( bossmove == 230 )
+		if( bossmove == 200 )
 		bossmove = 1;
 	}
-	
-	/*public int getX_e3(){
-		return x;
-		}
-	
-	public int getY_e3(){
-		return y;
-		}*/
-	
-	
-		
 		if(y > Y_TO_DIE){
 			alive = false;
 		}
@@ -61,4 +50,12 @@ public class Enemy3 extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
+	
+	public int getXboss(){
+		return x;
+		}
+	
+	public int getYboss(){
+		return y;
+		}
 }

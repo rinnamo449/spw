@@ -8,7 +8,7 @@ public class Gunboss extends Sprite{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
-	private int step = 12;
+	private int step = 6;
 	private boolean alive = true;
 	
 	public Gunboss(int x, int y) {
