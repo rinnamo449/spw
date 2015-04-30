@@ -40,4 +40,8 @@ public class Gun extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
+	
+	public void die(){
+		alive = false;
+	}
 }

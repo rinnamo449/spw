@@ -11,6 +11,7 @@ public class Enemy3 extends Sprite{
 	
 	private int step = 3;
 	private boolean alive = true;
+	private int life = 30;
 	
 	public Enemy3(int x, int y) {
 		super(x, y, 40, 40);
@@ -32,16 +33,16 @@ public class Enemy3 extends Sprite{
 
 	public void proceed(){
 	
-	if( bossmove > 0 && bossmove <= 100){
-		x = x + step;
-		bossmove++;
-	}
-	else if(bossmove > 100 && bossmove <= 200){
-	    x = x - step;
-		bossmove++;
-		if( bossmove == 200 )
-		bossmove = 1;
-	}
+		if( bossmove > 0 && bossmove <= 100){
+			x = x + step;
+			bossmove++;
+		}
+		else if(bossmove > 100 && bossmove <= 200){
+			x = x - step;
+			bossmove++;
+			if( bossmove == 200 )
+				bossmove = 1;
+		}
 		if(y > Y_TO_DIE){
 			alive = false;
 		}
@@ -50,7 +51,14 @@ public class Enemy3 extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
-	
+	public void loseLife(){
+		life--;
+		if(life <= 0)
+			alive = false;
+	}
+	public int getLife(){
+		return life;
+	}
 	public int getXboss(){
 		return x;
 		}
@@ -58,4 +66,8 @@ public class Enemy3 extends Sprite{
 	public int getYboss(){
 		return y;
 		}
+		
+	public void die(){
+		alive = false;
+	}
 }

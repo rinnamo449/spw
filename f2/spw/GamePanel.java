@@ -58,12 +58,18 @@ public class GamePanel extends JPanel {
         //big2.setColor(Color.RED);		
 	    big.drawString(String.format("SCORE : %08d", reporter.getScore()), 270, 30);
 	    big.drawString(String.format("LIFE : %01d", reporter.getDead()), 20, 50);
-		if( reporter.getScore() > 2000)
+		if(reporter.getStop() == 0 )
 		big.drawString(String.format("LIFEBOSS : %01d", reporter.getLifeboss()), 270, 50);
-		if( reporter.getScore() > 2000 && reporter.getScore() < 8000 )
-		big.drawString(String.format("BOSS IS APPEAR!!", reporter.getLifeboss()), 150, 300);
+		if(reporter.getStop() == 0 )
+		big.drawString(String.format("BLUE ENEMY APPEAR!!", reporter.getLifeboss()), 120, 300);
 	    
 		//hpbar
+		for(int j = 1; j <= reporter.getDead() ; j++){
+		    if(j%2 == 0){
+			big.fillRect(20+((j-1)*3),70,5,20);
+			}
+		}
+		/* //hpbar
 		if( reporter.getDead() >= 3 && reporter.getDead() < 6 )
 		big.fillRect(20,70,5,20);
 		else if( reporter.getDead() >= 6 && reporter.getDead() < 9 ){
@@ -99,10 +105,17 @@ public class GamePanel extends JPanel {
 		big.fillRect(48,70,5,20);
 		big.fillRect(55,70,5,20);
 		big.fillRect(62,70,5,20);}
-		
+		 */
+		 
 		//hpBoss
-	  if( reporter.getScore() > 2000 )
-		if( reporter.getLifeboss() >= 3 && reporter.getLifeboss() < 6 )
+	  if( reporter.getStop() == 0 ){
+		//System.out.println(reporter.getLifeboss());
+		for(int i = 1; i <= reporter.getLifeboss() ; i++){
+		    if(i%2 == 0){
+			big.fillRect(265+((i-1)*3),70,5,20);
+			}
+		}
+		/* if( reporter.getLifeboss() >= 3 && reporter.getLifeboss() < 6 )
 		big.fillRect(250,70,5,20);
 		else if( reporter.getLifeboss() >= 6 && reporter.getLifeboss() < 9 ){
 		big.fillRect(250,70,5,20);
@@ -220,8 +233,8 @@ public class GamePanel extends JPanel {
 		big.fillRect(320,70,5,20);
 		big.fillRect(327,70,5,20);
 		big.fillRect(334,70,5,20);
-		big.fillRect(341,70,5,20);}
-		
+		big.fillRect(341,70,5,20);} */
+	}
 		for(Sprite s : sprites){
 			s.draw(big);
 		}

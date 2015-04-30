@@ -15,7 +15,8 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	int stop = 1;
 	int attack = 0;
-	int lifeboss = 40;
+	int i=0,j=0;
+	int lifeboss;
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
@@ -29,8 +30,9 @@ public class GameEngine implements KeyListener, GameReporter{
 	private Timer timer;
 	
 	private long score = 0;
-	private double difficulty = 0.1;
+	private double difficulty = 0.05;
 	public int dead = 9;
+	public Enemy3 e3;
 	
 	
 	public GameEngine(GamePanel gp, SpaceShip v) {
@@ -65,18 +67,19 @@ public class GameEngine implements KeyListener, GameReporter{
         Enemy2 e2 = new Enemy2((int)(Math.random()*400), 100);
 		gp.sprites.add(e2);
 		enemies2.add(e2);
+		if(score > 2000 && score % 2000 == 0 && stop == 1){
+			e3 = new Enemy3(0, 100);
+			gp.sprites.add(e3);
+			enemies3.add(e3);
+			stop = 0; 
+			lifeboss = e3.getLife();
+		}
 		
-		if(score > 2000 && stop >0){
-		Enemy3 e3 = new Enemy3(0, 100);
-		gp.sprites.add(e3);
-		enemies3.add(e3);
-		stop--; }
-		
-		if(attack == 1 ){
+		/* if(attack == 1 ){
 			Gun g = new Gun(v.getX()+5,v.getY());
 			gp.sprites.add(g);
 			gun.add(g);
-			}
+		}
 			
 		if(attack == 2 ){
 			Gun g2 = new Gun(v.getX()-15,v.getY());
@@ -86,14 +89,36 @@ public class GameEngine implements KeyListener, GameReporter{
 			Gun g3 = new Gun(v.getX()+25,v.getY());
 			gp.sprites.add(g3);
 			gun.add(g3);
+		} */
+		
+	}
+	
+	private void generateWeapon(){
+	
+		if(attack == 1 ){
+			if(j%10 == 0){
+				Gun g = new Gun(v.getX()+5,v.getY());
+				gp.sprites.add(g);
+				gun.add(g);
 			}
-		//want gun shoot by boss
-		if( score > 2000 ){
-		for(int i=0; i<200 ;i++){
-		Gunboss gunb = new Gunboss(v.getX(),100);
-			gp.sprites.add(gunb);
-			gunboss.add(gunb); }}
+			j++;
 		}
+			
+		if(attack == 2 ){
+			if(j%10 == 0){
+			Gun g2 = new Gun(v.getX()-15,v.getY());
+			gp.sprites.add(g2);
+			gun.add(g2);
+			
+			Gun g3 = new Gun(v.getX()+25,v.getY());
+			gp.sprites.add(g3);
+			gun.add(g3);
+			}
+			j++;
+		}
+	
+	
+	}
 	
 	
 	private void process(){
@@ -101,12 +126,15 @@ public class GameEngine implements KeyListener, GameReporter{
 			generateEnemy();
 		}
 		
+		generateWeapon();
+		
 		Iterator<Enemy> e_iter = enemies.iterator();
 		while(e_iter.hasNext()){
 			Enemy e = e_iter.next();
 			e.proceed();
 			
 			if(!e.isAlive()){
+				e.die();
 				e_iter.remove();
 				gp.sprites.remove(e);
 				score += 200;
@@ -119,7 +147,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			Enemy2 e2 = e_iter2.next();
 			e2.proceed();
 			
-		if(!e2.isAlive()){
+			if(!e2.isAlive()){
 				e_iter2.remove();
 				gp.sprites.remove(e2);
 				score += 300;
@@ -132,10 +160,12 @@ public class GameEngine implements KeyListener, GameReporter{
 			Enemy3 e3 = e_iter3.next();
 			e3.proceed();
 			
-		if(!e3.isAlive()){
+			if(!e3.isAlive()){
+				e3.die();
 				e_iter3.remove();
 				gp.sprites.remove(e3);
 				score += 500;
+				stop = 1;
 			}
 		}
 		
@@ -157,7 +187,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			Gun g2 = e_iter_gun2.next();
 			g2.proceed();
 			
-		if(!g2.isAlive()){
+			if(!g2.isAlive()){
 				e_iter_gun2.remove();
 				gp.sprites.remove(g2);
 				score += 100;
@@ -170,6 +200,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			gunb.proceed();
 			
 		if(!gunb.isAlive()){
+				gunb.die();
 				e_iter_gunboss.remove();
 				gp.sprites.remove(gunb);
 				score += 100;
@@ -177,7 +208,20 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 		
 		
-		
+		//want gun shoot by boss
+		if(e3 != null){
+			if(e3.isAlive()){
+				if(i%20 == 0){
+					Gunboss gunb = new Gunboss(e3.getXboss(),137);
+					gp.sprites.add(gunb);
+					gunboss.add(gunb); 
+				}
+				i++;
+			}
+			else{
+				i = 0;
+			}
+		}
 		
 		gp.updateGameUI(this);
 		
@@ -195,8 +239,11 @@ public class GameEngine implements KeyListener, GameReporter{
 				for(Gun g : gun){
 				gr1 = g.getRectangle();
 				if(gr1.intersects(er)){
+					e.die();
+					g.die();
 					score += 100;
 					gp.sprites.remove(e);
+					gp.sprites.remove(g);
 					return;
 				}
 			}
@@ -228,13 +275,17 @@ public class GameEngine implements KeyListener, GameReporter{
 			for(Gun g : gun){
 				gr1 = g.getRectangle();
 				if(gr1.intersects(er3)){
+					//e3.die();
+					g.die();
+					gp.sprites.remove(g);
 					score += 100;
-					if(lifeboss > 0)
-					lifeboss--;
+					if(e3.isAlive())
+						e3.loseLife();
 					
-					if(lifeboss <= 0)
-					gp.sprites.remove(e3);
-					
+					else{
+						gp.sprites.remove(e3);
+					}
+					lifeboss = e3.getLife();
 					return;
 				}
 			}
@@ -246,7 +297,7 @@ public class GameEngine implements KeyListener, GameReporter{
 		}
 	
 	
-		for(Gun g : gun){
+		/* for(Gun g : gun){
 			gr1 = g.getRectangle();
 			if(gr1.intersects(vr)){
 				score += 100;
@@ -262,7 +313,7 @@ public class GameEngine implements KeyListener, GameReporter{
 				gp.sprites.remove(g2);
 				return;
 			}
-		}
+		} */
 		
 		for(Gunboss gunb : gunboss){
 			gbs = gunb.getRectangle();
@@ -271,7 +322,10 @@ public class GameEngine implements KeyListener, GameReporter{
 				gr1 = g.getRectangle();
 				
 				if(gr1.intersects(gbs)){
+				    g.die();
+					gunb.die();
 					dead -= 1;
+					gp.sprites.remove(g);
 					gp.sprites.remove(gunb);
 					return;
 				}
@@ -347,6 +401,10 @@ public class GameEngine implements KeyListener, GameReporter{
 
 	public long getScore(){
         return score;	}
+	public int getStop(){
+        return stop;	
+	}
+	
 	
 	public int getLifeboss(){
 	    return lifeboss; }
