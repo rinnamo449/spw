@@ -4,19 +4,15 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-public class Enemy3 extends Sprite{
-
-    int bossmove=1;
-	
+public class Item2 extends Sprite{
 	public static final int Y_TO_FADE = 400;
 	public static final int Y_TO_DIE = 600;
 	
-	private int step = 3;
+	private int step = 6;
 	private boolean alive = true;
-	private int life = 30;
 	
-	public Enemy3(int x, int y) {
-		super(x, y, 40, 40);
+	public Item2(int x, int y) {
+		super(x, y, 10, 10);
 		
 	}
 
@@ -28,52 +24,24 @@ public class Enemy3 extends Sprite{
 			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 
 					(float)(Y_TO_DIE - y)/(Y_TO_DIE - Y_TO_FADE)));
 		}
-		g.setColor(Color.blue);
+		g.setColor(Color.white);
 		g.fillRect(x, y, width, height);
 		
 	}
 
 	public void proceed(){
-	
-		if( bossmove > 0 && bossmove <= 100){
-			x = x + step;
-			bossmove++;
-		}
-		else if(bossmove > 100 && bossmove <= 200){
-			x = x - step;
-			bossmove++;
-			if( bossmove == 200 )
-				bossmove = 1;
-		}
+		y += step;
 		if(y > Y_TO_DIE){
 			alive = false;
 		}
+	}
+	public void die(){
+		alive = false;
 	}
 	
 	public boolean isAlive(){
 		return alive;
 	}
-	public void loseLife(){
-		life--;
-		if(life <= 0)
-			alive = false;
-	}
-	public int getLife(){
-		return life;
-	}
-	public int getXboss(){
-		return x;
-		}
 	
-	public int getYboss(){
-		return y;
-		}
-		
-	public void die(){
-		alive = false;
-	}
 	
-	public void stunt(){
-		step = 0;
-	}
 }

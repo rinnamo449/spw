@@ -44,4 +44,8 @@ public class Gunboss extends Sprite{
 	public void die(){
 		alive = false;
 	}
+	
+	public void stunt(){
+		step = 0;
+	}
 }

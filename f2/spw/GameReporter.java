@@ -6,4 +6,8 @@ public interface GameReporter {
 	int getStop();
 	int getDead();
     int getLifeboss();
+	int getSkillE();
+	int getSkillR();
+	int getStopgun();
+    
 }
